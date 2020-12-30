@@ -113,7 +113,7 @@ static void set_ramconfig() {
 
 static void variant_properties() {
     std::string product = GetProperty("ro.product.name", "");
-    if (product.find("land") == std::string::npos)
+    if (product.find("olive") == std::string::npos)
         return;
 
     // Get board_id from cmdline

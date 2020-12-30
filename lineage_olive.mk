@@ -18,28 +18,29 @@
 # Inherit from those products. Most specific first.
 $(call inherit-product, $(SRC_TARGET_DIR)/product/core_64_bit.mk)
 $(call inherit-product, $(SRC_TARGET_DIR)/product/full_base_telephony.mk)
-$(call inherit-product, $(SRC_TARGET_DIR)/product/product_launched_with_m.mk)
+$(call inherit-product, $(SRC_TARGET_DIR)/product/product_launched_with_p.mk)
 
 # Inherit some common Pixel Experience stuff
-$(call inherit-product, vendor/aosp/config/common_full_phone.mk)
+# $(call inherit-product, vendor/aosp/config/common_full_phone.mk)
 
-TARGET_GAPPS_ARCH := arm64
-TARGET_BOOT_ANIMATION_RES := 720
+# TARGET_GAPPS_ARCH := arm64
+# TARGET_BOOT_ANIMATION_RES := 720
 
-# Inherit from land device
+# Inherit from olive device
 $(call inherit-product, $(LOCAL_PATH)/device.mk)
 
-PRODUCT_BRAND := Xiaomi
-PRODUCT_MODEL := Redmi 3S
-PRODUCT_DEVICE := land
-PRODUCT_MANUFACTURER := Xiaomi
-PRODUCT_NAME := aosp_land
+PRODUCT_BRAND := xiaomi
+PRODUCT_DEVICE := olive
+PRODUCT_MANUFACTURER := xiaomi
+PRODUCT_NAME := lineage_olive
+PRODUCT_MODEL := Redmi 8
 
 PRODUCT_GMS_CLIENTID_BASE := android-xiaomi
 
-TARGET_VENDOR_PRODUCT_NAME := land
+PRODUCT_GMS_CLIENTID_BASE := android-xiaomi
+TARGET_VENDOR := xiaomi
+TARGET_VENDOR_PRODUCT_NAME := olive
+PRODUCT_BUILD_PROP_OVERRIDES += PRIVATE_BUILD_DESC="olive-user 10 QKQ1.191014.001 V12.0.1.0.QCNMIXM release-keys"
 
-PRODUCT_BUILD_PROP_OVERRIDES += \
-    PRIVATE_BUILD_DESC="land-user 6.0.1 MMB29M V10.2.2.0.MALMIXM release-keys"
-
-BUILD_FINGERPRINT := Xiaomi/land/land:6.0.1/MMB29M/V10.2.2.0.MALMIXM:user/release-keys
+# Set BUILD_FINGERPRINT variable to be picked up by both system and vendor build.prop
+BUILD_FINGERPRINT := Xiaomi/olive/olive:10/QKQ1.191014.001/V12.0.1.0.QCNMIXM:user/release-keys
