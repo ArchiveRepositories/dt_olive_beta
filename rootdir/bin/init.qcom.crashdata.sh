@@ -1,4 +1,5 @@
-# Copyright (c) 2014, The Linux Foundation. All rights reserved.
+#!/vendor/bin/sh
+# Copyright (c) 2017, The Linux Foundation. All rights reserved.
 #
 # Redistribution and use in source and binary forms, with or without
 # modification, are permitted provided that the following conditions are
@@ -11,7 +12,7 @@
 #       with the distribution.
 #     * Neither the name of The Linux Foundation nor the names of its
 #       contributors may be used to endorse or promote products derived
-#       from this software without specific prior written permission.
+#      from this software without specific prior written permission.
 #
 # THIS SOFTWARE IS PROVIDED "AS IS" AND ANY EXPRESS OR IMPLIED
 # WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF
@@ -24,8 +25,24 @@
 # WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE
 # OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN
 # IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+#
 
-key 158    BACK
-key 139    APP_SWITCH
-key 172    HOME
-key 217    SEARCH
+abnormalcnt="persist.vendor.crash.cnt"
+
+abnormal_cnt=`getprop $abnormalcnt`
+crash_detect=`getprop persist.vendor.crash.detect`
+
+if [ "$abnormal_cnt" = "" ]
+then
+setprop $abnormalcnt 0
+fi
+
+if [ "$crash_detect" = "true" ]
+then
+abnormal_cnt=`expr $abnormal_cnt + 1`
+setprop $abnormalcnt $abnormal_cnt
+elif [ "$crash_detect" = "false" ];then
+setprop persist.vendor.crash.detect true
+else
+setprop persist.vendor.crash.detect true
+fi

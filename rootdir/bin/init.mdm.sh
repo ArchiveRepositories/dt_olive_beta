@@ -1,6 +1,6 @@
 #! /vendor/bin/sh
 
-# Copyright (c) 2012-2013,2016,2018,2019 The Linux Foundation. All rights reserved.
+# Copyright (c) 2013, The Linux Foundation. All rights reserved.
 #
 # Redistribution and use in source and binary forms, with or without
 # modification, are permitted provided that the following conditions are met:
@@ -9,7 +9,7 @@
 #     * Redistributions in binary form must reproduce the above copyright
 #       notice, this list of conditions and the following disclaimer in the
 #       documentation and/or other materials provided with the distribution.
-#     * Neither the name of The Linux Foundation nor
+#     * Neither the name of Linux Foundation nor
 #       the names of its contributors may be used to endorse or promote
 #       products derived from this software without specific prior written
 #       permission.
@@ -27,18 +27,8 @@
 # ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #
 
-export PATH=/vendor/bin
-
-boot_reason=$(cat /proc/sys/kernel/boot_reason)
-reboot_reason=$(getprop ro.boot.alarmboot)
-if [ "$boot_reason" = "3" ] || [ "$reboot_reason" = "true" ]; then
-    setprop ro.vendor.alarm_boot true
-else
-    setprop ro.vendor.alarm_boot false
+baseband=`getprop ro.baseband`
+if [ "$baseband" = "mdm" ] || [ "$baseband" = "mdm2" ]; then
+	start vendor.mdm_helper
 fi
 
-# copy GPU frequencies to vendor property
-if [ -f /sys/class/kgsl/kgsl-3d0/gpu_available_frequencies ]; then
-    gpu_freq=$(cat /sys/class/kgsl/kgsl-3d0/gpu_available_frequencies) 2>/dev/null
-    setprop vendor.gpu.available_frequencies "$gpu_freq"
-fi

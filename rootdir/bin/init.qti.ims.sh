@@ -1,3 +1,5 @@
+#! /vendor/bin/sh
+
 # Copyright (c) 2014, The Linux Foundation. All rights reserved.
 #
 # Redistribution and use in source and binary forms, with or without
@@ -24,8 +26,32 @@
 # WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE
 # OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN
 # IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+#
+#
 
-key 158    BACK
-key 139    APP_SWITCH
-key 172    HOME
-key 217    SEARCH
+dir0=/data
+trigger_file=$dir0/ims_disabled
+ims_disabled=`getprop persist.vendor.ims.disabled`
+target=`getprop ro.build.product`
+
+#if [ ! -e $trigger_file ]; then
+#   for future use in doing conditional debugging
+#else
+#
+#fi
+echo "$ims_disabled"
+echo "$target"
+
+if [ "$ims_disabled" = "0" ]; then
+    echo "ims will be enabled"
+    setprop vendor.service.qti.ims.enabled 1
+    exit
+fi
+
+if [ "$ims_disabled" = "1" ] || [ "$target" = "msm8909_512" ]; then
+    echo "ims is disabled"
+    setprop vendor.service.qti.ims.enabled 0
+else
+    echo "ims is enabled"
+    setprop vendor.service.qti.ims.enabled 1
+fi
