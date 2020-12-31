@@ -19,10 +19,10 @@
 set -e
 
 # Initial copyright year
-export INITIAL_COPYRIGHT_YEAR=2016
+export INITIAL_COPYRIGHT_YEAR=2019
 
 # Required!
-DEVICE=land
+DEVICE=olive
 VENDOR=xiaomi
 
 # Load extract_utils and do some sanity checks
